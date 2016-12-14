@@ -1,0 +1,71 @@
+/*
+ *      *********
+ *      * INBOX *
+ *      *********
+ *
+ *      Place unclassified styles here until reformating
+ */
+ 
+$color-orange:							#ec6001;
+
+@mixin box-sizing($boxmodel) {
+  -webkit-box-sizing: $boxmodel;
+     -moz-box-sizing: $boxmodel;
+          box-sizing: $boxmodel;
+}
+
+
+
+* {
+  @include box-sizing(border-box);
+}
+*:before,
+*:after {
+  @include box-sizing(border-box);
+}
+
+p {
+	margin: 0;
+}
+html {
+	font-size: 14px;
+}
+body,html {
+	padding: 0;
+	margin: 0;
+}
+body {
+	height:100vh;
+	background: #E84C50 url('../images/gulp-logo.jpg') center center;
+	color: #fff;
+}
+
+
+
+
+.wrap {
+	padding: 65px 80px;
+}
+
+header {
+	h1 {
+		margin:0;
+		font-size: 2em;
+		text-transform: uppercase;
+	}
+}
+
+article {
+	padding: 50px;
+}
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    align-items: center;
+}
+.section {
+	position: relative;
+}
+
