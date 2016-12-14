@@ -17,11 +17,12 @@ npm install
 ```
 
 ## Usage
-```
-gulp serve // for development
-gulp build // for production
-```
 
+
+```
+gulp serve ##for development
+gulp build ##for production
+```
 
 Decembre 2016    
 53JS    
