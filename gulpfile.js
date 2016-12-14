@@ -9,10 +9,12 @@ const $ = require('gulp-load-plugins')();
 
 let production = false;
 
+
 gulp.task('html', () => {
 	return gulp.src(['app/**/*.html'])
 		.pipe(gulp.dest('.tmp'));
 });
+
 
 gulp.task('sass', () => {
 	return gulp.src('app/styles/main.scss')
@@ -45,6 +47,7 @@ gulp.task('connect', ['html','browserify', 'sass'], () => {
 		});
 });
 
+
 gulp.task('watch', [], () => {
 	$.livereload.listen();
 	gulp.watch([
@@ -58,7 +61,6 @@ gulp.task('watch', [], () => {
 	gulp.watch(['app/styles/**/*.{css,scss}'], ['sass']);
 	gulp.watch(['app/scripts/**/*.js'], ['browserify']);
 });
-
 
 
 gulp.task('images', [], () => {
@@ -77,6 +79,7 @@ gulp.task('images', [], () => {
 		.pipe(gulp.dest('dist'));
 });
 
+
 gulp.task('useref', ['sass', 'html'], () => {
 	const cssFilter = $.filter('.tmp/**/*.css', {restore: true});
 	const htmlFilter = $.filter('.tmp/*.html', {restore: true});
@@ -86,6 +89,7 @@ gulp.task('useref', ['sass', 'html'], () => {
 			searchPath: ['.tmp', 'app']
 		}))
 		.pipe($.debug({title: 'Debug:before cssFilter'}))
+		
 		// css
 		.pipe(cssFilter)
 		.pipe($.debug({title: 'Debug:after cssFilter'}))
@@ -103,35 +107,12 @@ gulp.task('useref', ['sass', 'html'], () => {
 		.pipe(gulp.dest('dist'));
 });
 
-function bundle(entries, filename, requires, externals) {
-	let options = {
-		entries: entries,
-		debug: !production,
-		ignoreMissing: true,
-		paths: []
-   };
-
-	return browserify(options)
-		.bundle().on('error', function(err) {
-			console.log(err.toString());
-			this.emit('end');
-		})
-		.pipe(source(filename))
-		.pipe($.buffer())
-		.pipe($.if(!production, $.sourcemaps.init({
-			loadMaps: true
-		})))
-		.pipe($.if(production, $.uglify().on('error',(e) => { 
-			console.log('Error in uglify !\n',e);
-		})))
-		.pipe($.if(!production, $.sourcemaps.write('./')));
-}
 
 gulp.task('browserify', [], () => {
 	return browserify({
 			entries: './app/scripts/main.js',
 			debug: !production
-	   	})
+		})
 		.bundle()
 		.on('error', function(err) {
 			console.log(err.toString());
@@ -151,6 +132,9 @@ gulp.task('browserify', [], () => {
 			'dist/scripts/',
 			'.tmp/scripts/')));
 });
+
+
+
 
 gulp.task('clean', require('del').bind(null, ['dist', '.tmp']));
 
